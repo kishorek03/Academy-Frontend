@@ -2,37 +2,46 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+nav {
+  display: flex;                     /* Use flexbox for the navigation bar */
+  justify-content: flex-end;        /* Align items to the right */
+  padding: 20px;                    /* Add padding to the nav */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+nav ul {
+  list-style-type: none;            /* Remove bullet points */
+  margin: 0;                        /* Remove default margin */
+  padding: 0;                       /* Remove default padding */
+  display: flex;                    /* Use flexbox for horizontal alignment */
+  gap: 15px;                        /* Space between buttons */
+}
+
+nav ul li {
+  display: inline;                  /* Inline display for list items */
+}
+
+.nav-button {
+  background-color: #00bfa5;       /* Button background color */
+  color: white;                    /* Text color */
+  padding: 10px;              /* Padding for buttons */
+  border: none;                    /* No border */
+  border-radius: 4px;              /* Rounded corners */
+  text-decoration: none;            /* Remove underline */
+  transition: background-color 0.3s; /* Transition effect */
+}
+
+.nav-button:hover {
+  background-color: #00796b;       /* Darker color on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  nav {
+      justify-content: center;       /* Center items on smaller screens */
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+  nav ul {
+      flex-direction: column;        /* Stack items vertically */
+      align-items: center;            /* Center items */
   }
 }

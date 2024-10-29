@@ -1,0 +1,129 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('TT.png'); /* Replace with your image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: hidden;
+}
+
+.register-container {
+    position: relative;
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+.register-form {
+    position: relative; /* Position relative to contain the z-index */
+    width: 100%;
+    max-width: 400px; /* Set max-width for the form */
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    z-index: 2; /* Position in front of the blurred background */
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center items horizontally */
+}
+
+.register-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.input-container {
+    width: 100%; /* Make input fields full width */
+    margin-bottom: 20px;
+}
+
+.input-container input,
+.input-container select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+}
+
+.input-container input:focus,
+.input-container select:focus {
+    border-color: #00bfa5;
+}
+
+.input-container-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.input-container-checkbox label {
+    margin-left: 8px;
+    color: #333;
+    font-size: 16px;
+}
+
+.register-button {
+    width: 100%; /* Full width for equal sizing */
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #00bfa5;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-button:hover {
+    background-color: #00796b;
+}
+
+.child-section {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.child-section h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.add-child,
+.remove-child {
+    display: block;
+    width: 100%; /* Full width for equal sizing */
+    padding: 8px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #00bfa5;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-child:hover,
+.remove-child:hover {
+    background-color: #00796b;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .register-container {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+    }
+    .register-form {
+        max-width: 90%; /* Make it responsive to smaller screens */
+        margin: 20px; /* Add margin for mobile devices */
+    }
+}
