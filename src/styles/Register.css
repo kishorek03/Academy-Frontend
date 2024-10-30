@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url('TT.png'); /* Replace with your image */
+    background-image: url('TT.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -9,25 +9,37 @@ body {
 }
 
 .register-container {
-    position: relative;
     display: flex;
-    justify-content: center; /* Center items horizontally */
+    justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
+    height: 80vh;
 }
-.register-form {
-    position: relative; /* Position relative to contain the z-index */
+
+.register-form-container {
     width: 100%;
-    max-width: 400px; /* Set max-width for the form */
-    padding: 40px;
-    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    height: 80%;
+    max-width: 400px;
+    overflow-y: auto;
+    min-height: 500px; /* Set a minimum height */
+}
+
+
+.register-form {
+    width: 100%;
+    max-width: 400px;
+    max-height: 700px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    z-index: 2; /* Position in front of the blurred background */
-    display: flex; /* Use flexbox for centering */
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center items horizontally */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    overflow-x: hidden;
+    /* Disable horizontal scrolling */
 }
 
 .register-title {
@@ -36,9 +48,23 @@ body {
     color: #333;
 }
 
+/* Hide scrollbar in WebKit browsers (Chrome, Safari) */
+.register-form::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+/* Hide scrollbar in Firefox */
+.register-form {
+    scrollbar-width: none;
+    /* Firefox */
+}
+
 .input-container {
-    width: 100%; /* Make input fields full width */
-    margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .input-container input,
@@ -50,6 +76,8 @@ body {
     border: 1px solid #ddd;
     border-radius: 4px;
     outline: none;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 .input-container input:focus,
@@ -57,28 +85,67 @@ body {
     border-color: #00bfa5;
 }
 
-.input-container-checkbox {
+.otp-container {
     display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+    gap: 10px;
+    width: 100%;
 }
 
-.input-container-checkbox label {
-    margin-left: 8px;
-    color: #333;
-    font-size: 16px;
+.otp-button {
+    font-size: 10px;
+    color: #555;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.otp-sent {
+    background-color: #4caf50;
+    cursor: not-allowed;
+    color: white;
+}
+
+.verify-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.verify-button {
+    font-size: 10px;
+    color: #555;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.verify-button.verified {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    color: white;
+    /* Text color */
+    font-weight: bold;
+    cursor: not-allowed;
+    color: white;
+    /* Text color */
+
 }
 
 .register-button {
-    width: 100%; /* Full width for equal sizing */
+    width: 100%;
     padding: 12px;
     font-size: 16px;
-    color: #fff;
+    color: #ffffff;
     background-color: #00bfa5;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
 }
 
 .register-button:hover {
@@ -86,7 +153,7 @@ body {
 }
 
 .child-section {
-    margin-top: 20px;
+    width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -98,32 +165,41 @@ body {
     color: #333;
 }
 
-.add-child,
-.remove-child {
-    display: block;
-    width: 100%; /* Full width for equal sizing */
-    padding: 8px;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #fff;
-    background-color: #00bfa5;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.add-children-section,
+.child-container,
+.remove-child,
+.add-child {
+    width: 100%;
 }
 
-.add-child:hover,
-.remove-child:hover {
+.remove-child,
+.add-child {
+    padding: 8px;
+    font-size: 14px;
+    color: #fff;
+    gap: 10px;
+    margin-bottom: 15px;
+    background-color: #00bfa5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 5px;
+}
+
+.remove-child:hover,
+.add-child:hover {
     background-color: #00796b;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-    .register-container {
-        flex-direction: column; /* Stack items vertically on smaller screens */
-    }
     .register-form {
-        max-width: 90%; /* Make it responsive to smaller screens */
-        margin: 20px; /* Add margin for mobile devices */
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    .otp-container {
+        flex-direction: column;
     }
 }
