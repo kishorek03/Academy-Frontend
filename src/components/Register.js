@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import '../styles/Register.css';
 
 function Register() {
     const [username, setUsername] = useState('');
+    const [userType, setUserType] = useState(''); // initialize as empty string
     const [gender, setGender] = useState('');
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
@@ -14,6 +15,7 @@ function Register() {
     const [message, setMessage] = useState('');
     const [otpSent, setOtpSent] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
+
     const handleAddChild = () => {
         setChildren([...children, { name: '', age: '', gender: '' }]);
     };
@@ -29,35 +31,33 @@ function Register() {
             return;
         }
         setMessage('Sending OTP...');
-        setOtpSent(true); // Enable the OTP input box immediately
+        setOtpSent(true);
         setMessage('');
-        
+
         try {
-            // Check if the email already exists
             const checkEmailResponse = await fetch('http://localhost:8080/register/check-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
             });
-    
+
             if (!checkEmailResponse.ok) {
                 const errorText = await checkEmailResponse.text();
-                setMessage(errorText || 'Email is already registered. Please use a different email.');
+                setMessage(errorText || 'Email is already registered.');
                 return;
             }
-    
-            // Proceed with sending OTP if email doesn't exist
+
             const response = await fetch('http://localhost:8080/register/generate-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
             });
-    
+
             if (response.ok) {
                 setMessage('OTP sent to your email.');
             } else {
                 const errorText = await response.text();
-                setMessage(errorText || 'Failed to send OTP. Please try again.');
+                setMessage(errorText || 'Failed to send OTP.');
                 setOtpSent(false);
             }
         } catch (error) {
@@ -66,7 +66,18 @@ function Register() {
             setOtpSent(false);
         }
     };
-    
+    const handleRegisterForChange = (e) => {
+        const selection = e.target.value;
+        setRegisterFor(selection);
+
+        // Set userType based on selection
+        if (selection === "self") {
+            setUserType("PLAYER");
+            setChildren([]); // clear children if registering for self
+        } else if ((selection === "withChildren"|| selection === "childrenOnly")) {
+            setUserType("PARENT");
+        }
+    };
 
     const handleVerifyOtp = async () => {
         if (!otp) {
@@ -96,34 +107,40 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        console.log('UserType before submit:', userType); // Debugging statement
+
+        // Email verification check
         if (!isVerified) {
             setMessage('Please verify your email with OTP before submitting.');
             return;
         }
+
+        // Password confirmation check
         if (password !== confirmPassword) {
             setMessage('Passwords do not match.');
             return;
         }
 
-        const data = {
+        const registrationData = {
             username,
             gender,
             email,
             password,
             mobile,
-            children: registerFor === "withChildren" ? children : []
+            userType,
+            children: (registerFor === "withChildren" || registerFor === "onlyForChildren") ? children : []
         };
 
         try {
             const response = await fetch('http://localhost:8080/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                body: JSON.stringify(registrationData),
             });
 
             if (response.ok) {
                 setMessage('Registration successful!');
-                // Reset form fields
                 setUsername('');
                 setGender('');
                 setEmail('');
@@ -146,7 +163,7 @@ function Register() {
             }
         } catch (error) {
             console.error('Error during registration:', error);
-            setMessage('An error occurred while communicating with the server. Please try again.');
+            setMessage('An error occurred while communicating with the server.');
         }
     };
 
@@ -251,17 +268,18 @@ function Register() {
                         <div className="input-container">
                             <select
                                 value={registerFor}
-                                onChange={(e) => setRegisterFor(e.target.value)}
+                                onChange={handleRegisterForChange}
                                 required
                             >
                                 <option value="">Select Registration Type</option>
-                                <option value="self">Registering for yourself</option>ā
+                                <option value="self">Registering for yourself</option>
                                 <option value="withChildren">Registering with children</option>
+                                <option value="childrenOnly">Registering only for your child/children</option>
                             </select>
                         </div>
 
 
-                        {registerFor === "withChildren" && (
+                        {(registerFor === "withChildren" || registerFor === "childrenOnly") && (
                             <div className="add-children-section">
                                 <h3>Children Details</h3>
                                 {children.map((child, index) => (
