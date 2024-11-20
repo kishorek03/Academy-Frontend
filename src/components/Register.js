@@ -28,26 +28,45 @@ function Register() {
             setMessage('Please enter a valid email.');
             return;
         }
+        setMessage('Sending OTP...');
+        setOtpSent(true); // Enable the OTP input box immediately
         setMessage('');
+        
         try {
+            // Check if the email already exists
+            const checkEmailResponse = await fetch('http://localhost:8080/register/check-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+    
+            if (!checkEmailResponse.ok) {
+                const errorText = await checkEmailResponse.text();
+                setMessage(errorText || 'Email is already registered. Please use a different email.');
+                return;
+            }
+    
+            // Proceed with sending OTP if email doesn't exist
             const response = await fetch('http://localhost:8080/register/generate-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
             });
-
+    
             if (response.ok) {
                 setMessage('OTP sent to your email.');
-                setOtpSent(true);
             } else {
                 const errorText = await response.text();
                 setMessage(errorText || 'Failed to send OTP. Please try again.');
+                setOtpSent(false);
             }
         } catch (error) {
             console.error('Error sending OTP:', error);
             setMessage('An error occurred while sending OTP.');
+            setOtpSent(false);
         }
     };
+    
 
     const handleVerifyOtp = async () => {
         if (!otp) {
@@ -113,15 +132,21 @@ function Register() {
                 setConfirmPassword('');
                 setMobile('');
                 setRegisterFor('');
-                setChildren([{ name: '', age: '', gender: '' }]);
+                setChildren([]);
                 setOtpSent(false);
                 setIsVerified(false);
             } else {
-                setMessage('Registration failed. Please try again.');
+                const errorData = await response.json();
+                if (errorData && typeof errorData === 'object') {
+                    const errorMessages = Object.values(errorData).join(', ');
+                    setMessage(`Registration failed: ${errorMessages}`);
+                } else {
+                    setMessage('Registration failed. Please verify the details.');
+                }
             }
         } catch (error) {
             console.error('Error during registration:', error);
-            setMessage('An error occurred. Please try again.');
+            setMessage('An error occurred while communicating with the server. Please try again.');
         }
     };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css'; // Make sure this line is present
+import './App.css'; 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -8,6 +8,7 @@ function App() {
     return (
         <Router>
             <div className="App">
+                {/* Navigation Bar */}
                 <nav>
                     <ul>
                         <li>
@@ -18,6 +19,8 @@ function App() {
                         </li>
                     </ul>
                 </nav>
+
+                {/* Routes Setup */}
                 <Routes>
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
