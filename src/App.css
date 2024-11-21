@@ -46,3 +46,15 @@ nav ul li {
       align-items: center;            /* Center items */
   }
 }
+
+.hero-text h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+

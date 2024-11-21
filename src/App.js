@@ -13,6 +13,7 @@ function App() {
         localStorage.removeItem('authToken'); // Clear the stored token
         setIsAuthenticated(false); // Set authentication status to false
     };
+    
     return (
         <Router>
             <div className="App">
@@ -41,6 +42,10 @@ function App() {
                 {/* Routes Setup */}
                 <Routes>
                     <Route 
+                        path="/" 
+                        element={<LandingPage />} 
+                    />
+                    <Route 
                         path="/register" 
                         element={<Register />} 
                     />
@@ -57,5 +62,18 @@ function App() {
         </Router>
     );
 }
-
+const LandingPage = () => {
+    return (
+        <div >
+            <header>
+                <div className="logo">
+                    <h1>TT Academy</h1>
+                </div>
+                <div className="hero-text">
+                    <h2>Choose the right academy for your future</h2>
+                </div>
+            </header>
+        </div>
+    );
+}
 export default App;
