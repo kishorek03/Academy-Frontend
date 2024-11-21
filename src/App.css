@@ -23,13 +23,14 @@ nav ul li {
 .nav-button {
   background-color: #00bfa5;       /* Button background color */
   color: white;                    /* Text color */
-  padding: 10px;              /* Padding for buttons */
+  padding: 8px 15px;               /* Smaller padding for smaller buttons */
   border: none;                    /* No border */
-  border-radius: 2px;              /* Rounded corners */
+  border-radius: 3px;              /* Rounded corners */
   text-decoration: none;            /* Remove underline */
   transition: background-color 0.3s; /* Transition effect */
+  font-size: 15px;                  /* Smaller font size */
+  display: inline-block;            /* Make it behave like an inline-block */
 }
-
 .nav-button:hover {
   background-color: #00796b;       /* Darker color on hover */
 }

@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
-function Login() {
+function Login({ setAuth }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');  // State to hold error messages
-    const navigate = useNavigate();  // Initialize useNavigate hook
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const isTokenExpired = (token) => {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return payload.exp < Date.now() / 1000;
+        } catch (error) {
+            console.error('Error parsing token:', error);
+            return true;
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        // Validate email and password input
+
         if (!email || !password) {
             setError("Email and password cannot be empty.");
             return;
@@ -21,28 +30,31 @@ function Login() {
             const response = await fetch('http://localhost:8080/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password }),
             });
 
-            // Handle response based on status code
             if (response.ok) {
-                // Successful login, navigate to Home
-                setError('');  // Clear any previous error
-                navigate('/home');  // Redirect to Home page (or dashboard)
-            } else {
-                // Handle server error response (like invalid email or password)
-                const errorData = await response.json();
+                const data = await response.json();
 
-                if (errorData.message) {
-                    // If backend returns a message, display it
-                    setError(errorData.message);
+                if (data.token) {
+                    localStorage.setItem('authToken', data.token);
+
+                    if (!isTokenExpired(data.token)) {
+                        setError('');
+                        setAuth(true); // Update authentication status
+                        navigate('/home'); // Redirect to home if the token is valid
+                    } else {
+                        setError('Session expired. Please log in again.');
+                        localStorage.removeItem('authToken');
+                    }
                 } else {
-                    // If there's no specific error message, use a default one
-                    setError('Login failed. Please check your credentials.');
+                    setError('Login failed. No token received.');
                 }
+            } else {
+                const errorData = await response.json();
+                setError(errorData.message || 'Login failed. Please check your credentials.');
             }
         } catch (error) {
-            // Catch any other errors like network issues
             console.error('Error during login:', error);
             setError('An error occurred while logging in. Please try again.');
         }
@@ -53,7 +65,6 @@ function Login() {
             <form className="login-form" onSubmit={handleSubmit}>
                 <h2 className="login-title">Login</h2>
 
-                {/* Error message */}
                 {error && <div className="error-message">{error}</div>}
 
                 <div className="input-container">

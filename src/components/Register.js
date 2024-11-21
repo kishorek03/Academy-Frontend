@@ -15,6 +15,7 @@ function Register() {
     const [message, setMessage] = useState('');
     const [otpSent, setOtpSent] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
+    
 
     const handleAddChild = () => {
         setChildren([...children, { name: '', age: '', gender: '' }]);
@@ -26,35 +27,43 @@ function Register() {
     };
 
     const handleSendOtp = async () => {
+        // Check if email is provided
         if (!email) {
             setMessage('Please enter a valid email.');
             return;
         }
+    
+        // Set loading state and message while OTP is being processed
         setMessage('Sending OTP...');
-        setOtpSent(true);
-        setMessage('');
-
+        setOtpSent(false); // Ensure OTP has not been sent until checked and verified
+    
         try {
+            // Check if the email already exists
             const checkEmailResponse = await fetch('http://localhost:8080/register/check-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
             });
-
+    
+            // If the email is already registered, show an appropriate message
             if (!checkEmailResponse.ok) {
                 const errorText = await checkEmailResponse.text();
                 setMessage(errorText || 'Email is already registered.');
+                setOtpSent(false);
                 return;
             }
-
+    
+            // If the email is valid and not already registered, send OTP
             const response = await fetch('http://localhost:8080/register/generate-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
             });
-
+    
+            // Handle OTP response
             if (response.ok) {
                 setMessage('OTP sent to your email.');
+                setOtpSent(true); // OTP successfully sent, allow user to proceed
             } else {
                 const errorText = await response.text();
                 setMessage(errorText || 'Failed to send OTP.');
@@ -66,6 +75,7 @@ function Register() {
             setOtpSent(false);
         }
     };
+    
     const handleRegisterForChange = (e) => {
         const selection = e.target.value;
         setRegisterFor(selection);
@@ -107,8 +117,6 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log('UserType before submit:', userType); // Debugging statement
 
         // Email verification check
         if (!isVerified) {
