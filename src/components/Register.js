@@ -39,7 +39,7 @@ function Register() {
     
         try {
             // Check if the email already exists
-            const checkEmailResponse = await fetch('http://13.50.15.17:8080/register/check-email', {
+            const checkEmailResponse = await fetch('http://localhost:8080/register/check-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
@@ -54,7 +54,7 @@ function Register() {
             }
     
             // If the email is valid and not already registered, send OTP
-            const response = await fetch('http://13.50.15.17:8080/register/generate-otp', {
+            const response = await fetch('http://localhost:8080/register/generate-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
@@ -96,7 +96,7 @@ function Register() {
         }
         setMessage('');
         try {
-            const response = await fetch('http://13.50.15.17:8080/register/verify-otp', {
+            const response = await fetch('http://localhost:8080/register/verify-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp })
@@ -141,7 +141,7 @@ function Register() {
         };
 
         try {
-            const response = await fetch('http://13.50.15.17:8080/register', {
+            const response = await fetch('http://localhost:8080/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(registrationData),
