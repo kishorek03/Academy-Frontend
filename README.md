@@ -33,7 +33,7 @@ Here is the step-by-step flow of the application:
 4. **Login Form**:
    - Login page with fields for email and password.
    - Option to resend OTP if verification is incomplete.
-   - ![Login Form](./screenshots/RegisterForm.png)
+   - ![Login Form](./screenshots/LoginForm.png)
 
 5. **Logged In**:
    - After successful login, users are directed to their dashboard.
