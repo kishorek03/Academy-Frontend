@@ -2,38 +2,6 @@
   text-align: center;
 }
 
-nav {
-  display: flex;                     /* Use flexbox for the navigation bar */
-  justify-content: flex-end;        /* Align items to the right */
-  padding: 20px;                    /* Add padding to the nav */
-}
-
-nav ul {
-  list-style-type: none;            /* Remove bullet points */
-  margin: 0;                        /* Remove default margin */
-  padding: 0;                       /* Remove default padding */
-  display: flex;                    /* Use flexbox for horizontal alignment */
-  gap: 15px;                        /* Space between buttons */
-}
-
-nav ul li {
-  display: inline;                  /* Inline display for list items */
-}
-
-.nav-button {
-  background-color: #00bfa5;       /* Button background color */
-  color: white;                    /* Text color */
-  padding: 8px 15px;               /* Smaller padding for smaller buttons */
-  border: none;                    /* No border */
-  border-radius: 3px;              /* Rounded corners */
-  text-decoration: none;            /* Remove underline */
-  transition: background-color 0.3s; /* Transition effect */
-  font-size: 15px;                  /* Smaller font size */
-  display: inline-block;            /* Make it behave like an inline-block */
-}
-.nav-button:hover {
-  background-color: #00796b;       /* Darker color on hover */
-}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -49,12 +17,96 @@ nav ul li {
 
 .hero-text h2 {
   font-size: 2rem;
+  width: 100%;
+  padding: 10px 12px;
+  color: rgb(171, 241, 255);
+  font-family: 'Merriweather', serif; 
   margin-bottom: 10px;
 }
-
+.hero-text h1{
+  font-size: 5rem;
+  color: rgb(247, 255, 250);
+  width: 100%;
+  padding: 8px 10px;
+  font-family: 'Georgia', serif; 
+  margin-bottom: 10px;
+}
 .hero-text p {
   font-size: 1.2rem;
+  color: rgb(47, 191, 220); 
   margin-bottom: 20px;
+}
+/* App.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color: rgb(47, 191, 220); 
+  font-family: 'Georgia', serif;
 }
 
 
+.landing-page {
+  position: relative; /* Establish positioning context */
+  color: white;
+  text-align: center;
+  min-height: 100vh; /* Ensures full screen height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Prevents scrolling due to pseudo-element */
+}
+
+/* Add blur effect to the background using ::before */
+.landing-page::before {
+  content: ""; /* Required for pseudo-element */
+  background-image: url('./styles/timoball.jpg'); /* Background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute; /* Place it behind the content */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(1px); /* Apply a subtle blur effect */
+  z-index: -1; /* Ensures the blur stays behind other content */
+  opacity: 0.9; /* Optional: Adjust transparency for a better effect */
+}
+
+
+nav {
+  position: absolute; /* Keeps the navbar above the image */
+  top: 0;
+  width: 100%;
+  z-index: 10; /* Ensures navbar stays above the image */
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px; /* Increase gap between buttons */
+  justify-content: flex-end;
+  padding: 8px 20px; /* Padding for the nav bar */
+  margin: 5; /* Ensure no default margins */
+}
+
+nav ul li {
+  display: inline-block; /* Keep list items as inline blocks */
+}
+
+nav a, .nav-button {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  background-color: #00bfa5;
+  padding: 6px 20px;
+  border-radius: 4px;
+  display: inline-block; /* Ensures proper spacing and alignment */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+nav a:hover, .nav-button:hover {
+  background-color: #00796b;
+}

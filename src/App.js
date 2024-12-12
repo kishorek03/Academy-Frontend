@@ -64,13 +64,13 @@ function App() {
 }
 const LandingPage = () => {
     return (
-        <div >
+        <div className="landing-page">
             <header>
-                <div className="logo">
-                    <h1>TT Academy</h1>
+                <div className="hero-text">
+                    <h1>TABLE TENNIS ACADEMY</h1>
                 </div>
                 <div className="hero-text">
-                    <h2>Choose the right academy for your future</h2>
+                    <h2>Choose the right academy for your future .....</h2>
                 </div>
             </header>
         </div>
