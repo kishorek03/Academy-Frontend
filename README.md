@@ -24,16 +24,16 @@ Here is the step-by-step flow of the application:
 2. **Register Form**: 
    - User-friendly registration form to collect user details.
    - Includes role selection (Player/Parent) and email input for OTP verification.
-   - ![Register Form](./screenshots/Register Form.png)
+   - ![Register Form](./screenshots/RegisterForm.png)
 
 3. **OTP Sent**:
    - Displays a confirmation message after the OTP is sent to the registered email.
-   - ![OTP Sent Screen](./screenshots/Otp sent.png)
+   - ![OTP Sent Screen](./screenshots/Otpsent.png)
 
 4. **Login Form**:
    - Login page with fields for email and password.
    - Option to resend OTP if verification is incomplete.
-   - ![Login Form](./screenshots/Login Form.png)
+   - ![Login Form](./screenshots/RegisterForm.png)
 
 5. **Logged In**:
    - After successful login, users are directed to their dashboard.
