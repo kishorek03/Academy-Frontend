@@ -19,26 +19,26 @@ Here is the step-by-step flow of the application:
 1. **Home Screen**: 
    - Welcome page displaying an overview of the application.
    - Navigation options for registration and login.
-   - ![Home Screen](./screenshot/Home.png)
+   - ![Home Screen](./screenshots/Home.png)
 
 2. **Register Form**: 
    - User-friendly registration form to collect user details.
    - Includes role selection (Player/Parent) and email input for OTP verification.
-   - ![Register Form](./screenshot/Register Form.png)
+   - ![Register Form](./screenshots/Register Form.png)
 
 3. **OTP Sent**:
    - Displays a confirmation message after the OTP is sent to the registered email.
-   - ![OTP Sent Screen](./screenshot/Otp sent.png)
+   - ![OTP Sent Screen](./screenshots/Otp sent.png)
 
 4. **Login Form**:
    - Login page with fields for email and password.
    - Option to resend OTP if verification is incomplete.
-   - ![Login Form](./screenshot/Login Form.png)
+   - ![Login Form](./screenshots/Login Form.png)
 
 5. **Logged In**:
    - After successful login, users are directed to their dashboard.
    - Displays user-specific information based on roles.
-   - ![Logged In Screen](./screenshot/login.png)
+   - ![Logged In Screen](./screenshots/login.png)
 
 ## How to Run the Application
 
