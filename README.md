@@ -69,7 +69,8 @@ Follow the steps below to set up and run the frontend application locally:
 
 ## Deployment
 The frontend application is deployed and accessible at:
-[https://academy-frontend-henna.vercel.app/](https://academy-frontend-henna.vercel.app/))
+[https://academy-frontend-henna.vercel.app/](https://academy-frontend-henna.vercel.app/)) 
+(SORRY GUYSS CURRENTLY BACK-END DEPLOYEMET HAS BEEN STOPPED ,WILL RECTIFY THEM SOON!)
 
 ## Folder Structure
 - **/screenshot**: Contains screenshots of different application screens.
