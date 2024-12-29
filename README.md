@@ -1,4 +1,4 @@
-# User Registration and Login Application - Frontend Repository
+# Academy Membership User Registration and Login Application - Frontend Repository
 
 Welcome to the frontend repository of the **User Registration and Login Application** developed for **TT Academy**. This application offers a seamless registration and login experience, tailored for real-time use by participants with roles such as **Player** and **Parent**. The frontend is built using **React.js**, integrated with RESTful APIs to facilitate real-time operations.
 
@@ -69,7 +69,8 @@ Follow the steps below to set up and run the frontend application locally:
 
 ## Deployment
 The frontend application is deployed and accessible at:
-[https://academy-frontend-henna.vercel.app/](https://academy-frontend-henna.vercel.app/))
+[https://academy-frontend-henna.vercel.app/](https://academy-frontend-henna.vercel.app/)) 
+(SORRY GUYSS CURRENTLY BACK-END DEPLOYEMET HAS BEEN STOPPED ,WILL RECTIFY THEM SOON!)
 
 ## Folder Structure
 - **/screenshot**: Contains screenshots of different application screens.
