@@ -103,3 +103,20 @@ hr {
     font-size: 14px;
     color: #777;
 }
+.announcements {
+    margin-top: 20px;
+  }
+  
+  .announcements ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .announcements li {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
