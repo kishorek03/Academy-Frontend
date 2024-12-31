@@ -61,7 +61,7 @@ body, html {
 /* Add blur effect to the background using ::before */
 .landing-page::before {
   content: ""; /* Required for pseudo-element */
-  background-image: url('./styles/timoball.jpg'); /* Background image */
+  background-image: url('K:\java\academy-frontend\src\styles\images\timoball.jpg'); /* Background image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -109,4 +109,13 @@ nav a, .nav-button {
 
 nav a:hover, .nav-button:hover {
   background-color: #00796b;
+}
+.gradient-text {
+  background: linear-gradient(90deg, #ff7a00, #ff2a68);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
 }
