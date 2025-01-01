@@ -1,41 +1,47 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Home() {
     const navigate = useNavigate();
-    const [user, setUser] = useState(null); // Store user information
-    const [countdown, setCountdown] = useState(0); // Track token expiration countdown
-    const [dropdownVisible, setDropdownVisible] = useState(false); // Toggle dropdown visibility
+    const [user, setUser] = useState(null);
+    const [countdown, setCountdown] = useState(0);
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [profilePicture, setProfilePicture] = useState('/TT.png'); // Public folder path
 
-    // Fetch user details from the token (only username)
     const fetchUserDetails = async (token) => {
         try {
-            const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+            const payload = JSON.parse(atob(token.split('.')[1]));
             setUser({
-                name: payload.sub, // Assuming 'sub' is the username
+                name: payload.sub,
+                id: payload.userId, // Assuming userId is in the token payload
             });
+            // Fetch the profile picture
+            const response = await axios.get(`/profile/picture/${payload.userId}`);
+            if (response.data && response.data.profilePictureUrl) {
+                setProfilePicture(response.data.profilePictureUrl);
+            }
         } catch (error) {
             console.error('Error fetching user details:', error);
         }
     };
 
-    // Start countdown timer based on token expiration
     const startCountdown = useCallback(
         (token) => {
             try {
                 const payload = JSON.parse(atob(token.split('.')[1]));
-                const expirationTime = payload.exp * 1000; // exp is in seconds, convert to milliseconds
+                const expirationTime = payload.exp * 1000;
                 const currentTime = Date.now();
                 const remainingTime = expirationTime - currentTime;
 
                 if (remainingTime > 0) {
                     const interval = setInterval(() => {
                         const newRemainingTime = expirationTime - Date.now();
-                        setCountdown(Math.floor(newRemainingTime / 1000)); // Update countdown every second
+                        setCountdown(Math.floor(newRemainingTime / 1000));
 
                         if (newRemainingTime <= 0) {
-                            clearInterval(interval); // Stop countdown when token expires
-                            navigate('/login'); // Redirect to login
+                            clearInterval(interval);
+                            navigate('/login');
                         }
                     }, 1000);
                 }
@@ -46,46 +52,74 @@ function Home() {
         [navigate]
     );
 
-    // Check if token is expired
     const isTokenExpired = (token) => {
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
-            return payload.exp < Date.now() / 1000; // Expiration check
+            return payload.exp < Date.now() / 1000;
         } catch (error) {
             console.error('Error parsing token:', error);
-            return true; // Assume expired if error occurs
+            return true;
         }
     };
 
-    // Handle user authentication on page load
     useEffect(() => {
         const token = localStorage.getItem('authToken');
-
         if (!token || isTokenExpired(token)) {
-            navigate('/login'); // Redirect to login if not authenticated or token expired
+            navigate('/login');
         } else {
-            fetchUserDetails(token); // Fetch user details if valid token
-            startCountdown(token); // Start countdown for token expiration
+            fetchUserDetails(token);
+            startCountdown(token);
         }
     }, [navigate, startCountdown]);
 
-    // Handle toggling the dropdown menu
     const toggleDropdown = () => {
         setDropdownVisible(!dropdownVisible);
     };
 
-    // Handle logout
     const handleLogout = () => {
-        localStorage.removeItem('authToken'); // Remove token on logout
-        navigate('/login'); // Redirect to login page
+        localStorage.removeItem('authToken');
+        navigate('/login');
     };
 
-    // Show loading message until user data is fetched
+    const handleProfilePictureClick = () => {
+        document.getElementById('fileInput').click();
+    };
+
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        if (file && user) {
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+    
+                const response = await axios.post(
+                    `/profile/upload/${user.id}`,
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    }
+                );
+    
+                if (response.data && response.data.profilePictureUrl) {
+                    setProfilePicture(response.data.profilePictureUrl); // Update the profile picture URL
+                    alert('Profile picture updated successfully');
+                } else {
+                    throw new Error('Profile picture URL not found in response');
+                }
+            } catch (error) {
+                console.error('Error uploading profile picture:', error);
+                alert('Failed to upload profile picture');
+            }
+        }
+    };
+    
+
     if (!user) {
         return <div>Loading...</div>;
     }
 
-    // Inline styles for responsive design
     const styles = {
         homeContainer: {
             textAlign: 'center',
@@ -96,31 +130,14 @@ function Home() {
             fontSize: '36px',
             color: '#1de5f7',
         },
-        footer: {
-            marginTop: '20px',
-        },
-        footerLink: {
-            fontSize: '16px',
-            color: '#1de5f7',
-            textDecoration: 'none',
-        },
-        footerLinkHover: {
-            textDecoration: 'underline',
-        },
-        profileButton: {
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: 0,
-        },
         profileIcon: {
             width: '50px',
             height: '50px',
             cursor: 'pointer',
             borderRadius: '50%',
+            objectFit: 'cover',
         },
         dropdownToggle: {
-            color: 'linear-gradient(90deg, #ff7a00, #ff2a68)',
             fontSize: '25px',
             fontWeight: 'bold',
             cursor: 'pointer',
@@ -130,7 +147,6 @@ function Home() {
             position: 'absolute',
             right: '20px',
             top: '20px',
-            display: 'inline-block',
         },
         dropdownMenu: {
             position: 'absolute',
@@ -143,17 +159,6 @@ function Home() {
             minWidth: '150px',
             boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
         },
-        dropdownItem: {
-            background: 'none',
-            border: 'none',
-            color: '#007bff',
-            padding: '8px',
-            cursor: 'pointer',
-            textAlign: 'left',
-        },
-        dropdownItemHover: {
-            backgroundColor: '#f1f1f1',
-        },
         logoutButton: {
             background: 'linear-gradient(90deg, #ff7a00, #ff2a68)',
             color: 'white',
@@ -162,10 +167,6 @@ function Home() {
             padding: '10px',
             textAlign: 'center',
             cursor: 'pointer',
-            transition: 'background 0.3s ease',
-        },
-        logoutButtonHover: {
-            background: 'linear-gradient(90deg, #ff2a68, #ff7a00)',
         },
     };
 
@@ -174,41 +175,35 @@ function Home() {
             <h1 style={styles.header}>Welcome, {user.name}!</h1>
             <h2>It's great to have you back.</h2>
 
-            {/* Profile Dropdown and Countdown Timer at the top-right */}
             <div style={styles.profileDropdown}>
-                {/* User icon */}
-                <button onClick={toggleDropdown} style={styles.profileButton}>
-                    <img src="K:\java\academy-frontend\src\styles\images\profile.png" style={styles.profileIcon} />
+                <button
+                    onClick={handleProfilePictureClick}
+                    style={{ background: 'none', border: 'none', padding: 0 }}
+                >
+                    <img
+                        src={profilePicture}
+                        style={styles.profileIcon}
+                    />
                 </button>
-
-                {/* Display user's name and handle dropdown visibility */}
-                <p className="gradient-text" onClick={toggleDropdown} style={styles.dropdownToggle}>{`Hi, ${user.name}`}</p>
-
+                <input
+                    type="file"
+                    id="fileInput"
+                    style={{ display: 'none' }}
+                    onChange={handleFileChange}
+                />
+                <p
+                    onClick={toggleDropdown}
+                    style={styles.dropdownToggle}
+                >{`Hi, ${user.name}`}</p>
                 {dropdownVisible && (
                     <div style={styles.dropdownMenu}>
-                        <p>Session expires in </p>
-                        <p>{countdown > 0 ? countdown : 'Expired'} seconds</p>
+                        <p>Session expires in {countdown > 0 ? countdown : 'Expired'} seconds</p>
                         <hr />
-                        <button
-                            style={styles.logoutButton}
-                            onClick={handleLogout}
-                            onMouseEnter={(e) =>
-                                (e.target.style.background =
-                                    styles.logoutButtonHover.background)
-                            }
-                            onMouseLeave={(e) =>
-                                (e.target.style.background =
-                                    styles.logoutButton.background)
-                            }
-                        >
+                        <button style={styles.logoutButton} onClick={handleLogout}>
                             Log Out
                         </button>
                     </div>
                 )}
-            </div>
-
-            <div style={styles.footer}>
-                {/* Footer content */}
             </div>
         </div>
     );
