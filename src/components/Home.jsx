@@ -7,7 +7,7 @@ function Home() {
     const [user, setUser] = useState(null);
     const [countdown, setCountdown] = useState(0);
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const [profilePicture, setProfilePicture] = useState('/TT.png'); // Public folder path
+    const [profilePicture, setProfilePicture] = useState('./image.png'); // Default image in the public folder
 
     const fetchUserDetails = async (token) => {
         try {
@@ -87,7 +87,12 @@ function Home() {
 
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
-        if (file && user) {
+        if (file && user && user.id) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload a valid image file.');
+                return;
+            }
+    
             try {
                 const formData = new FormData();
                 formData.append('file', file);
@@ -113,13 +118,11 @@ function Home() {
                 alert('Failed to upload profile picture');
             }
         }
-    };
-    
+    };    
 
     if (!user) {
         return <div>Loading...</div>;
     }
-
     const styles = {
         homeContainer: {
             textAlign: 'center',
@@ -168,42 +171,139 @@ function Home() {
             textAlign: 'center',
             cursor: 'pointer',
         },
+        navbar: {
+            font: 'Segoe UI',
+            fontSize: '30px',
+            textAlign: 'center',
+            padding: '10px 20px',
+            color: 'white',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap', // Allow items to wrap on small screens
+        },
+        nav: {
+            backgroundColor: 'white', // Corrected property name
+            boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.1)', // Corrected property name
+        },
+        navbarLink: {
+            fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif', // Fixed font family syntax
+            padding: '23px 10px',
+            color: 'white',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            fontSize: '20px',
+            marginRight: '20px',
+            position: 'relative',
+            display: 'inline-block', // Ensure it's inline-block
+            transition: 'color 0.3s ease, transform 0.3s ease',
+            '&:hover': {
+                color: '#ff2a68',
+                transform: 'scale(1.1)',
+                textShadow: '0 0 10px rgba(255, 42, 104, 0.5)',
+            }
+        },   
+        // Media Queries for responsiveness
+        '@media (max-width: 768px)': {
+            homeContainer: {
+                padding: '20px',
+            },
+            header: {
+                fontSize: '28px',
+            },
+            profileIcon: {
+                width: '40px',
+                height: '40px',
+            },
+            navbar: {
+                fontSize: '24px',
+                flexDirection: 'column', // Stack the navbar items vertically
+                alignItems: 'flex-start',
+            },
+            navbarLink: {
+                fontSize: '18px',
+                marginBottom: '10px',
+            },
+            profileDropdown: {
+                position: 'relative',
+                marginTop: '10px',
+            },
+            dropdownMenu: {
+                minWidth: '120px', // Reduce the width of dropdown on smaller screens
+                padding: '8px',
+            },
+            logoutButton: {
+                padding: '8px',
+            },
+        },
+    
+        '@media (max-width: 480px)': {
+            header: {
+                fontSize: '24px',
+            },
+            profileIcon: {
+                width: '30px',
+                height: '30px',
+            },
+            navbar: {
+                fontSize: '20px',
+            },
+            navbarLink: {
+                fontSize: '16px',
+                marginRight: '0',
+                marginBottom: '8px',
+            },
+        },
     };
+    
+    
 
     return (
-        <div style={styles.homeContainer}>
-            <h1 style={styles.header}>Welcome, {user.name}!</h1>
-            <h2>It's great to have you back.</h2>
+        <div>
+            {/* Navbar */}
+            <div style={styles.navbar}>
+                <div>Table Tennis Academy</div>
+                <div>
+                    <a href="/profile" style={styles.navbarLink}>Profile</a>
+                    <a href="/Announcements" style={styles.navbarLink}>Announcements</a>
+                    <a href="/Fee" style={styles.navbarLink}>Fee</a>
+                    <a href="/settings" style={styles.navbarLink}>Settings</a>
+                </div>
+            </div>
+            <div style={styles.homeContainer}>
+                <h1 style={styles.header}>Welcome, {user.name}!</h1>
+                <h2>It's great to have you back.</h2>
 
-            <div style={styles.profileDropdown}>
-                <button
-                    onClick={handleProfilePictureClick}
-                    style={{ background: 'none', border: 'none', padding: 0 }}
-                >
-                    <img
-                        src={profilePicture}
-                        style={styles.profileIcon}
+                <div style={styles.profileDropdown}>
+                    <button
+                        onClick={handleProfilePictureClick}
+                        style={{ background: 'none', border: 'none', padding: 0 }}
+                    >
+                        <img
+                            src={profilePicture}
+                            style={styles.profileIcon}
+                        />
+                    </button>
+                    <input
+                        type="file"
+                        id="fileInput"
+                        style={{ display: 'none' }}
+                        onChange={handleFileChange}
                     />
-                </button>
-                <input
-                    type="file"
-                    id="fileInput"
-                    style={{ display: 'none' }}
-                    onChange={handleFileChange}
-                />
-                <p
-                    onClick={toggleDropdown}
-                    style={styles.dropdownToggle}
-                >{`Hi, ${user.name}`}</p>
-                {dropdownVisible && (
-                    <div style={styles.dropdownMenu}>
-                        <p>Session expires in {countdown > 0 ? countdown : 'Expired'} seconds</p>
-                        <hr />
-                        <button style={styles.logoutButton} onClick={handleLogout}>
-                            Log Out
-                        </button>
-                    </div>
-                )}
+                    <p
+                        onClick={toggleDropdown}
+                        style={styles.dropdownToggle}
+                    >{`Hi, ${user.name}`}</p>
+                    {dropdownVisible && (
+                        <div style={styles.dropdownMenu}>
+                            <p>Session expires in {countdown > 0 ? countdown : 'Expired'} seconds</p>
+                            <hr />
+                            <button style={styles.logoutButton} onClick={handleLogout}>
+                                Log Out
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
