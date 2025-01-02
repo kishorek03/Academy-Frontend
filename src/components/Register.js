@@ -241,6 +241,8 @@ function Register() {
                                 <option value="">Select Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
+                                <option value="Others">others</option>
+
                             </select>
                         </div>
 
@@ -326,6 +328,8 @@ function Register() {
                                             <option value="">Select Gender</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
+                                            <option value="Others">others</option>
+
                                         </select>
                                         <button type="button" onClick={() => handleRemoveChild(index)} className="remove-child">
                                             Remove Child
@@ -333,7 +337,7 @@ function Register() {
                                     </div>
                                 ))}
                                 <button type="button" onClick={handleAddChild} className="add-child">
-                                    Add Child
+                                + add child
                                 </button>
                             </div>
                         )}
