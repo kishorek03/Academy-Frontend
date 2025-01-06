@@ -179,15 +179,17 @@ function Home() {
             color: 'white',
             display: 'flex',
             justifyContent: 'space-between',
+            borderBottom: '2px solid white', // Adds a white line below the navbar
             alignItems: 'center',
             flexWrap: 'wrap', // Allow items to wrap on small screens
         },
         nav: {
-            backgroundColor: 'white', // Corrected property name
-            boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.1)', // Corrected property name
+            backgroundColor: 'white',
+            boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.1)',
+            borderBottom: '2px solid white', // Adds a white line below the navbar
         },
         navbarLink: {
-            fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif', // Fixed font family syntax
+            fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
             padding: '23px 10px',
             color: 'white',
             cursor: 'pointer',
@@ -195,14 +197,29 @@ function Home() {
             fontSize: '20px',
             marginRight: '20px',
             position: 'relative',
-            display: 'inline-block', // Ensure it's inline-block
+            display: 'inline-block',
             transition: 'color 0.3s ease, transform 0.3s ease',
             '&:hover': {
                 color: '#ff2a68',
                 transform: 'scale(1.1)',
                 textShadow: '0 0 10px rgba(255, 42, 104, 0.5)',
-            }
-        },   
+            },
+            '&:after': {
+            content: '""',
+            position: 'absolute',
+            bottom: '0', // Positions underline at the bottom
+            left: '0',
+            width: '100%',
+            height: '2px',
+            backgroundColor: 'white',
+            transform: 'scaleX(0)', // Start with no underline
+            transformOrigin: 'left',
+            transition: 'transform 0.3s ease', // Smooth transition
+        },
+        '&:hover:after': {
+            transform: 'scaleX(1)', // Expand underline on hover
+        },
+    },       
         // Media Queries for responsiveness
         '@media (max-width: 768px)': {
             homeContainer: {
@@ -242,8 +259,8 @@ function Home() {
                 fontSize: '24px',
             },
             profileIcon: {
-                width: '30px',
-                height: '30px',
+                width: '20px',
+                height: '20px',
             },
             navbar: {
                 fontSize: '20px',
@@ -279,8 +296,9 @@ function Home() {
                         onClick={handleProfilePictureClick}
                         style={{ background: 'none', border: 'none', padding: 0 }}
                     >
-                        <img
+                       <img
                             src={profilePicture}
+                            alt="" // Added alt attribute
                             style={styles.profileIcon}
                         />
                     </button>
