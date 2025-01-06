@@ -1,16 +1,18 @@
 # Academy Membership User Registration and Login Application - Frontend Repository
 
-Welcome to the frontend repository of the **User Registration and Login Application** developed for **TT Academy**. This application offers a seamless registration and login experience, tailored for real-time use by participants with roles such as **Player** and **Parent**. The frontend is built using **React.js**, integrated with RESTful APIs to facilitate real-time operations.
+Welcome to the frontend repository of the **User Registration and Login Application** developed for **TT Academy**. This application offers a seamless registration, login, and account management experience, tailored for real-time use by participants with roles such as **Player** and **Parent**. The frontend is built using **React.js**, integrated with RESTful APIs to facilitate real-time operations.
 
 ## Features
 - **Dynamic Forms**: React-based dynamic forms to handle user input types and state management.
-- **OTP-Based Email Verification**: Enhancing security through one-time password verification during registration.
+- **OTP-Based Email Verification**: Enhances security through one-time password verification during registration.
+- **Forgot Password and Reset Password**: Allows users to reset their password through an email link with a user-friendly UI.
 - **Responsive Design**: Ensures smooth user experience across devices.
+- **Updated Home Page**: Modern and improved UI for the home page to enhance user experience.
 
 ## Technologies Used
 - React.js
 - JavaScript
-- Html
+- HTML
 - CSS
 
 ## Application Flow
@@ -18,7 +20,7 @@ Here is the step-by-step flow of the application:
 
 1. **Home Screen**: 
    - Welcome page displaying an overview of the application.
-   - Navigation options for registration and login.
+   - Navigation options for registration, login, and password management.
    - ![Home Screen](./screenshots/Home.png)
 
 2. **Register Form**: 
@@ -35,16 +37,26 @@ Here is the step-by-step flow of the application:
    - Option to resend OTP if verification is incomplete.
    - ![Login Form](./screenshots/LoginForm.png)
 
-5. **Logged In**:
+5. **Forgot Password**:
+   - Allows users to request a password reset link via email.
+   - Displays a confirmation message once the reset email is sent.
+
+6. **Reset Password**:
+   - Users can reset their password using the link sent to their email.
+   - Includes validation for strong password criteria.
+
+7. **Logged In**:
    - After successful login, users are directed to their dashboard.
    - Displays user-specific information based on roles.
-   - ![Logged In Screen](./screenshots/login.png)
 
 ## How to Run the Application
 
 Follow the steps below to set up and run the frontend application locally:
 
 1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo-url/frontend
+
    ```bash
    git clone https://github.com/your-repo-url/frontend
    ```
@@ -78,7 +90,6 @@ The frontend application is deployed and accessible at:
   - `registerform.png`
   - `otpsent.png`
   - `loginform.png`
-  - `loggedin.png`
 - **src/**: Contains all React components and CSS files.
   - `components/`: React components.
   - `styles/`: CSS files for styling the application.
