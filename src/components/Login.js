@@ -17,6 +17,7 @@ function Login({ setAuth }) {
         if (!email || !password) {
             setError("Email and password cannot be empty.");
             return;
+            
         }
 
         try {
