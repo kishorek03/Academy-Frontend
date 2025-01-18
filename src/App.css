@@ -61,7 +61,7 @@ body, html {
 /* Add blur effect to the background using ::before */
 .landing-page::before {
   content: ""; /* Required for pseudo-element */
-  background-image: url('../styles/images\timoball.jpg'); /* Background image */
+  background-image: url('../styles/images/timoball.jpg'); /* Background image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
