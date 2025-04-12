@@ -7,7 +7,7 @@ const NavBar = () => {
       <nav style={styles.navbarContainer}>
         <div style={styles.navbarTitle}>
           <img 
-          src="./TTLogo.jpg" height="200" width="200" style={styles.navbarLogo} 
+          src="../styles/images/TTLogo.jpg" height="200" width="200" style={styles.navbarLogo} 
           />
           <span style={styles.academyTitle}>TABLE TENNIS ACADEMY</span>
         </div>
