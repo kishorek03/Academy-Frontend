@@ -18,11 +18,13 @@ function Home() {
         name: payload?.sub,
         id: payload.userId,
       });
+      localStorage.setItem("loggeduser",JSON.stringify(payload));
     } catch (error) {
       console.error("Invalid token format", error);
       navigate('/login');
     }
   }, [navigate]);
+
 
   if (!user) {
     return <div style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>Loading...</div>;

@@ -4,7 +4,10 @@ const Payments = () => {
   const loadRazorpay = (amountInRupees, label) => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
+
     script.onload = () => {
+      const loggeduser = JSON.parse(localStorage.getItem("loggeduser"));
+      console.log(loggeduser,"kkkkk")
       const options = {
         key: "rzp_test_77vK8RP2JmefJ1",
         amount: amountInRupees * 100,
@@ -13,6 +16,34 @@ const Payments = () => {
         description: label,
         handler: function (response) {
           alert("Payment Successful! ID: " + response.razorpay_payment_id);
+          if(loggeduser && loggeduser.userId){
+            
+          }
+          const payload = {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id || "test_order_id",
+            razorpay_signature: response.razorpay_signature || "test_signature",
+            amount: amountInRupees,
+            currency: "INR",
+            userid: loggeduser?.userId,
+          };
+
+          fetch("http://localhost:8080/payments/update", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          })
+            .then((res) => res.text())
+            .then((data) => {
+              console.log(data);
+              alert("Payment details saved to backend.");
+            })
+            .catch((err) => {
+              console.error("Error saving payment:", err);
+              alert("Failed to save payment details.");
+            });
         },
         prefill: {
           name: "Player Name",
@@ -20,12 +51,14 @@ const Payments = () => {
           contact: "9876543210",
         },
         theme: {
-          color: "#00796b", // Teal theme
+          color: "#00796b",
         },
       };
+
       const rzp = new window.Razorpay(options);
       rzp.open();
     };
+
     document.body.appendChild(script);
   };
 

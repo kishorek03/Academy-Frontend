@@ -81,6 +81,7 @@ nav {
   top: 0;
   width: 100%;
   z-index: 10; /* Ensures navbar stays above the image */
+  background-color: blue;
 }
 
 nav ul {

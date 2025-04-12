@@ -6,9 +6,11 @@ const NavBar = () => {
     <>
       <nav style={styles.navbarContainer}>
         <div style={styles.navbarTitle}>
-          <img 
-          src="../styles/images/TTLogo.jpg" height="200" width="200" style={styles.navbarLogo} 
-          />
+        <img 
+          src={require('../styles/images/TTLogo.jpg')} 
+          alt="TT Academy Logo" 
+          style={styles.navbarLogo} 
+        />
           <span style={styles.academyTitle}>TABLE TENNIS ACADEMY</span>
         </div>
         <ul style={styles.navLinks}>
@@ -23,20 +25,22 @@ const NavBar = () => {
 };
 const styles = {
   navbarContainer: {
-    position: 'fixed', // Keep the navbar fixed at the top
-    top: 0,            // Align it to the top of the page
-    left: 0,           // Align it to the left of the page
-    width: '100%',     // Make sure the navbar spans the full width
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px 20px',
-    backgroundColor: '#333',
-    zIndex: 1000,      // Make sure it appears above other content (like background)
+  //   position: 'fixed', // Keep the navbar fixed at the top
+  //   top: 0,            // Align it to the top of the page
+  //   left: 0,           // Align it to the left of the page
+  //   width: '100%',     // Make sure the navbar spans the full width
+  //   display: 'flex',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  //   padding: '10px 20px',
+  //   backgroundColor: '#333',
+  //   zIndex: 1000,      // Make sure it appears above other content (like background)
+  backgroundColor:'red'
   },
   navbarTitle: {
     display: 'flex',
     alignItems: 'center',
+    backgroundColor: 'black'
   },
   navbarLogo: {
     width: '40px',
