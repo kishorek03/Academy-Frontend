@@ -1,0 +1,113 @@
+/* Base Reset */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Main Container */
+.settings-container {
+  padding: 80px 15%;
+  max-width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #afc0d6;
+  overflow-y: auto;
+}
+
+/* Heading */
+.settings-heading {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-align: center;
+  color: #333;
+}
+
+/* Form Grid */
+.settings-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* Grouping Inputs */
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Labels */
+.settings-group label {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Inputs & Selects */
+.settings-group input,
+.settings-group select {
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+.settings-group input:focus,
+.settings-group select:focus {
+  border-color: #00796b;
+  outline: none;
+}
+
+/* Checkbox Group */
+.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* Save Button */
+.save-btn {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.save-btn:hover {
+  background-color: #004d40;
+}
+
+/* Dark Theme */
+.dark-theme {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+.dark-theme .settings-container {
+  background-color: #1e1e1e;
+}
+
+.dark-theme .settings-group input,
+.dark-theme .settings-group select {
+  background-color: #2c2c2c;
+  color: #fff;
+  border-color: #666;
+}
+
+.dark-theme .save-btn {
+  background-color: #2196f3;
+}

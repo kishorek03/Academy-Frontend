@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
+
 function Login({ setAuth }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -10,6 +11,8 @@ function Login({ setAuth }) {
     const [mode, setMode] = useState('login');
     const [loading, setLoading] = useState(false); // New state for managing loading
     const navigate = useNavigate();
+
+
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault();

@@ -112,7 +112,6 @@ nav a:hover, .nav-button:hover {
 }
 .gradient-text {
   background: linear-gradient(90deg, #ff7a00, #ff2a68);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 25px;
   font-weight: bold;
