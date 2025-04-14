@@ -78,7 +78,7 @@ body {
   background-color: #00796b;
   color: white;
   border: none;
-  padding: 14px;
+  padding: 15px;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
@@ -111,3 +111,27 @@ body {
 .dark-theme .save-btn {
   background-color: #2196f3;
 }
+/* Sign Out Button - Themed and Fixed */
+.signout-btn {
+  position: fixed;
+  bottom: 150px;
+  right: 250px;
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  color: white;
+  padding: 20px 35px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.signout-btn:hover {
+  transform: scale(1.05) rotate(-1deg);
+  background: linear-gradient(135deg, #ee0979, #ff6a00);
+  box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
+}
+

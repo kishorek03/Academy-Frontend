@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Settings.css";
+import '../../styles/Settings.css';
+
 
 const Settings = () => {
   const [emailNotifications, setEmailNotifications] = useState(true);
@@ -60,7 +61,6 @@ const Settings = () => {
     if (!validate()) return;
     alert("Settings saved successfully!");
   };
-
   return (
     <div className="settings-container">
       <h2 className="settings-heading">Account Settings</h2>
@@ -194,6 +194,23 @@ const Settings = () => {
             Save Settings
           </button>
         </div>
+        {/* Sign Out */}
+<div className="settings-group">
+  <button
+    type="button"
+    className="signout-btn"
+    onClick={() => {
+      localStorage.clear(); // Clear all localStorage items
+      // If you're using cookies for tokens, clear them here too
+      // document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      alert("You have been signed out.");
+      window.location.href = "/"; // Redirect to homepage
+    }}
+  >
+    Sign Out
+  </button>
+</div>
+
       </form>
     </div>
   );

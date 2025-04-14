@@ -1,80 +1,147 @@
-import React, { useState } from 'react';
-import './App.css';
-import { BrowserRouter as Router, Route, Routes, useLocation, Link } from 'react-router-dom';
+// src/App.js
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
+import { getUserFromToken } from './utils/tokenUtils';
 
 import ResetPassword from './Service/ResetPassword';
 import Register from './components/Register';
 import Login from './components/Login';
 import Home from './components/Home';
-import Profile from './components/Profile';
-import Announcements from './components/Announcements';
-import Settings from './components/Settings';
-import Payments from './components/Payments';
+import Profile from './components/Users/Profile';
+import Announcements from './components/Users/Announcements';
+import Settings from './components/Users/Settings';
+import Payments from './components/Users/Payments';
+import ShowPayments from './components/Admin/ShowPayments';
+import ShowUsers from './components/Admin/ShowUsers';
+import FixtureMaker from './components/Admin/FixtureMaker';
+import AdminAnnouncements from './components/Admin/AdminAnnouncements';
+
+import './App.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    const user = getUserFromToken();
+    if (user) {
+      setIsAuthenticated(true);
+      setRole(user.role);
+    }
+  }, []);
 
   return (
     <Router>
-      <NavBar isAuthenticated={isAuthenticated} />
+      <NavBar isAuthenticated={isAuthenticated} role={role} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login setAuth={setIsAuthenticated} />} />
+        <Route path="/login" element={<Login setAuth={setIsAuthenticated} setRole={setRole} />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route
-          path="/home"
-          element={isAuthenticated ? <Home /> : <Login setAuth={setIsAuthenticated} />}
-        />
-        <Route
-          path="/profile"
-          element={isAuthenticated ? <Profile /> : <Login setAuth={setIsAuthenticated} />}
-        />
-        <Route
-          path="/payments"
-          element={isAuthenticated ? <Payments /> : <Login setAuth={setIsAuthenticated} />}
-        />
-        <Route
-          path="/announcements"
-          element={isAuthenticated ? <Announcements /> : <Login setAuth={setIsAuthenticated} />}
-        />
-        <Route
-          path="/settings"
-          element={isAuthenticated ? <Settings /> : <Login setAuth={setIsAuthenticated} />}
-        />
+
+        {isAuthenticated && (
+          <>
+            <Route path="/home" element={<Home />} />
+            <Route path="/settings" element={<Settings />} />
+          </>
+        )}
+
+        {isAuthenticated && (role === 'PLAYER' || role === 'PARENT') && (
+          <>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="/announcements" element={<Announcements />} />
+          </>
+        )}
+
+        {isAuthenticated && role === 'ADMIN' && (
+          <>
+            <Route path="/show-payments" element={<ShowPayments />} />
+            <Route path="/show-users" element={<ShowUsers />} />
+            <Route path="/fixture-maker" element={<FixtureMaker />} />
+            <Route path="/admin-announcements" element={<AdminAnnouncements />} />
+          </>
+        )}
       </Routes>
     </Router>
   );
 }
 
-const NavBar = ({ isAuthenticated }) => {
-  const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
-  const isRegisterPage = location.pathname === '/register';
-
+const NavBar = ({ isAuthenticated, role }) => {
   return (
     <nav className="navbar">
       <ul className="nav-list">
         {!isAuthenticated ? (
           <>
-            {!isLoginPage && (
-              <li>
-                <Link to="/login" className="nav-button">Login</Link>
-              </li>
-            )}
-            {!isRegisterPage && (
-              <li>
-                <Link to="/register" className="nav-button">Register</Link>
-              </li>
-            )}
+            <li>
+              <NavLink to="/login" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                Login
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/register" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                Register
+              </NavLink>
+            </li>
           </>
         ) : (
           <>
-            <li><Link to="/home" className="nav-button">Home</Link></li>
-            <li><Link to="/profile" className="nav-button">Profile</Link></li>
-            <li><Link to="/payments" className="nav-button">Payments</Link></li>
-            <li><Link to="/announcements" className="nav-button">Announcements</Link></li>
-            <li><Link to="/settings" className="nav-button">Settings</Link></li>
+            <li>
+              <NavLink to="/home" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                Home
+              </NavLink>
+            </li>
+
+            {(role === 'PLAYER' || role === 'PARENT') && (
+              <>
+                <li>
+                  <NavLink to="/profile" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/payments" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Payments
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/announcements" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Announcements
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {role === 'ADMIN' && (
+              <>
+                <li>
+                  <NavLink to="/show-payments" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Payment Details
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/show-users" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Manage Users
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/fixture-maker" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Create Fixture
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/admin-announcements" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Announcement
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            <li>
+              <NavLink to="/settings" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                Settings
+              </NavLink>
+            </li>
           </>
         )}
       </ul>

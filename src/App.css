@@ -8,11 +8,14 @@
   nav {
       justify-content: center;       /* Center items on smaller screens */
   }
-
   nav ul {
       flex-direction: column;        /* Stack items vertically */
       align-items: center;            /* Center items */
   }
+}
+/* Hide scrollbar in WebKit browsers for scrollContainer */
+.scroll-container::-webkit-scrollbar {
+  display: none;
 }
 
 .hero-text h2 {
@@ -81,7 +84,6 @@ nav {
   top: 0;
   width: 100%;
   z-index: 10; /* Ensures navbar stays above the image */
-  background-color: blue;
 }
 
 nav ul {
@@ -99,11 +101,11 @@ nav ul li {
 
 nav a, .nav-button {
   color: white;
-  text-decoration: none;
-  font-size: 15px;
+  text-decoration:none;
+  font-size: 18px;
   background-color: #00bfa5;
-  padding: 6px 20px;
-  border-radius: 4px;
+  padding: 4px 24px;
+  border-radius: 5px;
   display: inline-block; /* Ensures proper spacing and alignment */
   transition: background-color 0.3s ease; /* Smooth hover effect */
 }
@@ -111,11 +113,19 @@ nav a, .nav-button {
 nav a:hover, .nav-button:hover {
   background-color: #00796b;
 }
-.gradient-text {
-  background: linear-gradient(90deg, #ff7a00, #ff2a68);
-  -webkit-text-fill-color: transparent;
-  font-size: 25px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
+.nav-button {
+  padding: 4px 24px;
+  color: black;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.nav-button:hover {
+  background-color: #e0e0e0;
+}
+
+.nav-button.active {
+  background-color: #007bff;
+  color: white;
 }

@@ -7,7 +7,6 @@ const Payments = () => {
 
     script.onload = () => {
       const loggeduser = JSON.parse(localStorage.getItem("loggeduser"));
-      console.log(loggeduser,"kkkkk")
       const options = {
         key: "rzp_test_77vK8RP2JmefJ1",
         amount: amountInRupees * 100,
