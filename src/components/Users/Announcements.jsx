@@ -23,7 +23,7 @@ const Announcements = () => {
       })
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
-          setAnnouncements(data.reverse()); // newest first
+          setAnnouncements(data.reverse());
         }
       })
       .catch((err) => {
@@ -37,30 +37,26 @@ const Announcements = () => {
 
   return (
     <div style={styles.container}>
-      <style>
-        {`
-          ::-webkit-scrollbar {
-            display: none;
-          }
-        `}
-      </style>
-      <div style={styles.header}></div>
-      <div style={styles.scrollWrapper}>
-        <div style={styles.cardContainer}>
-          {announcements.map((note, index) => (
-            <div key={index} style={styles.card}>
-              <h3 style={styles.cardTitle}>
-                {note.title || `📢 Announcement ${index + 1}`}
-              </h3>
-              <div
-                style={styles.cardMessage}
-                dangerouslySetInnerHTML={{
-                  __html: note.content || note.message || note,
-                }}
-              />
-            </div>
-          ))}
-        </div>
+      <style>{`
+        ::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+      <h1 style={styles.title}>🏓 Table Tennis Announcements</h1>
+      <div style={styles.grid}>
+        {announcements.map((note, index) => (
+          <div key={index} style={styles.card}>
+            <h2 style={styles.cardTitle}>
+              {note.title || `📢 Announcement ${index + 1}`}
+            </h2>
+            <p
+              style={styles.cardMessage}
+              dangerouslySetInnerHTML={{
+                __html: note.content || note.message || note,
+              }}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -68,45 +64,42 @@ const Announcements = () => {
 
 const styles = {
   container: {
-    minHeight: "50vh",
-    padding: "5rem 10rem",
+    padding: "4rem 2rem",
     fontFamily: "Segoe UI, sans-serif",
-    color: "#fff",
-  },
-  header: {
-    textAlign: "center",
-    marginBottom: "2rem",
-  },
-  scrollWrapper: {
-    maxHeight: "600px",
+    minHeight: "100vh",
     overflowY: "auto",
-    scrollbarWidth: "none", // Firefox
-    msOverflowStyle: "none", // IE/Edge
   },
-  cardContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
+  title: {
+    textAlign: "center",
+    fontSize: "3rem",
+    color: "black",
+    marginBottom: "2rem",
+    fontWeight: "bold",
+  },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
     gap: "1.5rem",
   },
   card: {
-    background: "linear-gradient(to right,rgb(18, 145, 111), #99f2c8)",
-    border: "1px solid #ffffff33",
-    borderRadius: "12px",
-    padding: "1rem",
-    width: "300px",
-    backdropFilter: "blur(5px)",
-    boxShadow: "0 8px 16px rgba(0,0,0,0.25)",
-    transition: "transform 0.2s ease-in-out",
+    background: "white",
+    border: "2px solid #047857",
+    borderRadius: "16px",
+    padding: "1.5rem",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    transition: "transform 0.2s",
+    cursor: "pointer",
   },
   cardTitle: {
-    fontSize: "2rem",
-    color: "black",
+    fontSize: "1.5rem",
+    color: "#065f46",
     marginBottom: "0.5rem",
   },
   cardMessage: {
     fontSize: "1rem",
-    color: "#f5f5f5",
+    color: "#333",
+    lineHeight: "1.5",
   },
 };
+
 export default Announcements;

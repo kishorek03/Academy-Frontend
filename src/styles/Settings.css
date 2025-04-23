@@ -7,12 +7,15 @@ body {
 
 /* Main Container */
 .settings-container {
-  padding: 80px 15%;
-  max-width: 100%;
-  min-height: 100vh;
+  margin-top: 80px; /* navbar height */
+  padding: 40px 15% 80px 15%; /* top, right, bottom, left */
+  max-width: 90%;
+  min-height: calc(100vh - 80px); /* view height minus navbar */
   box-sizing: border-box;
   background-color: #afc0d6;
   overflow-y: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Heading */
