@@ -6,15 +6,18 @@ import { getUserFromToken } from './utils/tokenUtils';
 import ResetPassword from './Service/ResetPassword';
 import Register from './components/Register';
 import Login from './components/Login';
-import Home from './components/Home';
+import Home from './components/Users/Home';
 import Profile from './components/Users/Profile';
 import Announcements from './components/Users/Announcements';
 import Settings from './components/Users/Settings';
 import Payments from './components/Users/Payments';
+import AdminHome from './components/Admin/AdminHome';
 import ShowPayments from './components/Admin/ShowPayments';
 import ShowUsers from './components/Admin/ShowUsers';
 import FixtureMaker from './components/Admin/FixtureMaker';
 import AdminAnnouncements from './components/Admin/AdminAnnouncements';
+import TTLogo from './styles/images/TTLogo.jpg';
+
 
 import './App.css';
 
@@ -41,25 +44,26 @@ function App() {
 
         {isAuthenticated && (
           <>
-            <Route path="/home" element={<Home />} />
-            <Route path="/settings" element={<Settings />} />
-          </>
-        )}
+            {role === 'PLAYER' || role === 'PARENT' ? (
+              <>
+                <Route path="/home" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/payments" element={<Payments />} />
+                <Route path="/announcements" element={<Announcements />} />
+                <Route path="/settings" element={<Settings />} />
+              </>
+            ) : null}
 
-        {isAuthenticated && (role === 'PLAYER' || role === 'PARENT') && (
-          <>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/payments" element={<Payments />} />
-            <Route path="/announcements" element={<Announcements />} />
-          </>
-        )}
-
-        {isAuthenticated && role === 'ADMIN' && (
-          <>
-            <Route path="/show-payments" element={<ShowPayments />} />
-            <Route path="/show-users" element={<ShowUsers />} />
-            <Route path="/fixture-maker" element={<FixtureMaker />} />
-            <Route path="/admin-announcements" element={<AdminAnnouncements />} />
+            {role === 'ADMIN' && (
+              <>
+                <Route path="/home" element={<AdminHome />} />
+                <Route path="/show-payments" element={<ShowPayments />} />
+                <Route path="/show-users" element={<ShowUsers />} />
+                <Route path="/fixture-maker" element={<FixtureMaker />} />
+                <Route path="/admin-announcements" element={<AdminAnnouncements />} />
+                <Route path="/settings" element={<Settings />} />
+              </>
+            )}
           </>
         )}
       </Routes>
@@ -70,6 +74,10 @@ function App() {
 const NavBar = ({ isAuthenticated, role }) => {
   return (
     <nav className="navbar">
+      <div className="logo-wrapper">
+        <img src={TTLogo} alt="TT Logo" className="logo" />
+        <span className="title1">TABLE TENNIS ACADEMY</span>
+      </div>
       <ul className="nav-list">
         {!isAuthenticated ? (
           <>
@@ -86,14 +94,13 @@ const NavBar = ({ isAuthenticated, role }) => {
           </>
         ) : (
           <>
-            <li>
-              <NavLink to="/home" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
-                Home
-              </NavLink>
-            </li>
-
             {(role === 'PLAYER' || role === 'PARENT') && (
               <>
+                <li>
+                  <NavLink to="/home" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Home
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink to="/profile" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
                     Profile
@@ -109,11 +116,21 @@ const NavBar = ({ isAuthenticated, role }) => {
                     Announcements
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/settings" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Settings
+                  </NavLink>
+                </li>
               </>
             )}
 
             {role === 'ADMIN' && (
               <>
+                <li>
+                  <NavLink to="/home" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Home
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink to="/show-payments" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
                     Payment Details
@@ -134,14 +151,13 @@ const NavBar = ({ isAuthenticated, role }) => {
                     Announcement
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/settings" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
+                    Settings
+                  </NavLink>
+                </li>
               </>
             )}
-
-            <li>
-              <NavLink to="/settings" className={({ isActive }) => isActive ? 'nav-button active' : 'nav-button'}>
-                Settings
-              </NavLink>
-            </li>
           </>
         )}
       </ul>

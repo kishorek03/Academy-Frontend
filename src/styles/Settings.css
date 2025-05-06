@@ -12,6 +12,8 @@ body {
   max-width: 90%;
   min-height: calc(100vh - 80px); /* view height minus navbar */
   box-sizing: border-box;
+  border-radius: 35px;
+
   background-color: #afc0d6;
   overflow-y: auto;
   margin-left: auto;

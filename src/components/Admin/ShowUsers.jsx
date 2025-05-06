@@ -27,12 +27,18 @@ const ShowUsers = () => {
     fetchUsers();
   }, [fetchUsers]);
 
-
-  const toggleActive = async (userId, currentStatus) => {
+  const toggleActive = async (userId, currentStatus, username) => {
+    const confirmMessage = currentStatus
+      ? `Are you sure you want to deactivate ${username}?`
+      : `Are you sure you want to activate ${username}?`;
+  
+    const confirmToggle = window.confirm(confirmMessage);
+    if (!confirmToggle) return;
+  
     try {
       const response = await axios.patch(
-        `http://localhost:8080/admin/users/${userId}/status`,
-        { active: !currentStatus },
+        `http://localhost:8080/admin/users/${userId}/status?active=${!currentStatus}`,
+        {}, // Empty body
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,9 +53,11 @@ const ShowUsers = () => {
       alert('Failed to update user status');
     }
   };
-
-  const deleteUser = async (userId) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this user?');
+  
+  
+  const deleteUser = async (userId, username) => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete ${username}?`);
+  
     if (confirmDelete) {
       try {
         const response = await axios.delete(`http://localhost:8080/admin/users/${userId}`, {
@@ -66,7 +74,7 @@ const ShowUsers = () => {
       }
     }
   };
-
+  
   const filteredUsers = users.filter(
     (user) =>
       user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -100,7 +108,7 @@ const ShowUsers = () => {
                     <div style={styles.row}>
                       <strong>Status:</strong>{' '}
                       <button
-                        onClick={() => toggleActive(user.id, user.active)}
+                        onClick={() => toggleActive(user.id, user.active, user.username)}
                         style={{
                           ...styles.statusButton,
                           backgroundColor: user.active ? '#22c55e' : '#ef4444',
@@ -111,7 +119,7 @@ const ShowUsers = () => {
                     </div>
                     <div style={styles.row}>
                       <button
-                        onClick={() => deleteUser(user.id)}
+                        onClick={() => deleteUser(user.id,user.username)}
                         style={styles.deleteButton}
                       >
                         Delete

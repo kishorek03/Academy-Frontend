@@ -2,21 +2,37 @@
   text-align: center;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap');
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  nav {
-      justify-content: center;       /* Center items on smaller screens */
-  }
-  nav ul {
-      flex-direction: column;        /* Stack items vertically */
-      align-items: center;            /* Center items */
-  }
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
-/* Hide scrollbar in WebKit browsers for scrollContainer */
-.scroll-container::-webkit-scrollbar {
-  display: none;
+
+.title1 {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: default;
+  margin-left: 5px; /* Space between logo and title */
+  background: linear-gradient(90deg, #c2e6bc, #73d138);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+
 
 .hero-text h2 {
   font-size: 2rem;
@@ -78,31 +94,35 @@ body, html {
   opacity: 0.9; /* Optional: Adjust transparency for a better effect */
 }
 
-
 nav {
-  position: absolute; /* Keeps the navbar above the image */
+  position: absolute;
   top: 0;
   width: 100%;
-  z-index: 10; /* Ensures navbar stays above the image */
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  box-sizing: border-box;
 }
 
 nav ul {
   list-style: none;
   display: flex;
-  gap: 20px; /* Increase gap between buttons */
-  justify-content: flex-end;
-  padding: 8px 20px; /* Padding for the nav bar */
-  margin: 5; /* Ensure no default margins */
+  gap: 20px;
+  margin: 0;       /* Make sure there is no unwanted spacing */
+  padding: 0;      /* Clean padding */
+  align-items: center;
 }
 
 nav ul li {
-  display: inline-block; /* Keep list items as inline blocks */
+  display: flex;   /* Ensures the buttons align nicely */
 }
 
 nav a, .nav-button {
   color: white;
   text-decoration:none;
-  font-size: 18px;
+  font-size: 20px;
   background-color: #00bfa5;
   padding: 4px 24px;
   border-radius: 5px;
@@ -114,7 +134,7 @@ nav a:hover, .nav-button:hover {
   background-color: #00796b;
 }
 .nav-button {
-  padding: 4px 24px;
+  padding: 4px 15px;
   color: black;
   text-decoration: none;
   border-radius: 4px;
